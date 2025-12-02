@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Events - College Event Management{% endblock %}
+{% block content %}
+<h2>All Events</h2>
+<div class="search-bar">
+    <form method="GET" action="{{ url_for('main.events') }}">
+        <input type="text" name="search" placeholder="Search events..." value="{{ request.args.get('search', '') }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<div class="events-grid">
+    {% for event in events %}
+    <div class="event-card">
+        <h4>{{ event.title }}</h4>
+        <p>{{ event.description[:100] }}...</p>
+        <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Available Seats:</strong> {{ event.available_seats() }}/{{ event.capacity }}</p>
+        <a href="{{ url_for('main.event_detail', event_id=event.id) }}" class="btn btn-secondary">View Details</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

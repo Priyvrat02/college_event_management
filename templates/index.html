@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Home - College Event Management{% endblock %}
+{% block content %}
+<div class="hero">
+    <h2>Welcome to College Event Management</h2>
+    <p>Discover and register for amazing college events!</p>
+    <a href="{{ url_for('main.events') }}" class="btn btn-primary">Browse Events</a>
+</div>
+<div class="events-preview">
+    <h3>Upcoming Events</h3>
+    <div class="events-grid">
+        {% for event in events[:6] %}
+        <div class="event-card">
+            <h4>{{ event.title }}</h4>
+            <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Available Seats:</strong> {{ event.available_seats() }}/{{ event.capacity }}</p>
+            <a href="{{ url_for('main.event_detail', event_id=event.id) }}" class="btn btn-secondary">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

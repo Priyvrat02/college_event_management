@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - College Event Management{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <p>{{ total_users }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Events</h3>
+        <p>{{ total_events }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Registrations</h3>
+        <p>{{ total_registrations }}</p>
+    </div>
+</div>
+<h3>Events Analytics</h3>
+<table class="admin-table">
+    <tr><th>Event Title</th><th>Date</th><th>Registrations</th><th>Capacity</th></tr>
+    {% for event in events %}
+    <tr>
+        <td>{{ event.title }}</td>
+        <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+        <td>{{ event.registrations|length }}</td>
+        <td>{{ event.capacity }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

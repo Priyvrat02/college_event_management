@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{{ event.title }} - College Event Management{% endblock %}
+{% block content %}
+<div class="event-detail">
+    <h2>{{ event.title }}</h2>
+    <div class="event-info">
+        <p><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Organizer:</strong> {{ event.organizer.username }}</p>
+        <p><strong>Capacity:</strong> {{ event.capacity }}</p>
+        <p><strong>Available Seats:</strong> {{ event.available_seats() }}</p>
+    </div>
+    <div class="event-description">
+        <h3>Description</h3>
+        <p>{{ event.description }}</p>
+    </div>
+    {% if 'user_id' in session %}
+        {% if is_registered %}
+        <button onclick="cancelRegistration({{ event.id }})" class="btn btn-danger">Cancel Registration</button>
+        {% else %}
+        <button onclick="registerEvent({{ event.id }})" class="btn btn-success">Register</button>
+        {% endif %}
+    {% else %}
+    <p><a href="{{ url_for('main.login') }}">Login to register for this event</a></p>
+    {% endif %}
+</div>
+<script>
+function registerEvent(eventId) {
+    fetch(`/register_event/${eventId}`, { method: 'POST' })
+        .then(r => r.json())
+        .then(d => { alert(d.message); location.reload(); });
+}
+function cancelRegistration(eventId) {
+    fetch(`/cancel_registration/${eventId}`, { method: 'POST' })
+        .then(r => r.json())
+        .then(d => { alert(d.message); location.reload(); });
+}
+</script>
+{% endblock %}

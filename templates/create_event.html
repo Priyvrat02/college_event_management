@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Create Event - College Event Management{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h2>Create New Event</h2>
+    <form method="POST" action="{{ url_for('main.create_event') }}">
+        <input type="text" name="title" placeholder="Event Title" required>
+        <textarea name="description" placeholder="Event Description" required></textarea>
+        <input type="datetime-local" name="date" required>
+        <input type="text" name="location" placeholder="Event Location" required>
+        <input type="number" name="capacity" placeholder="Event Capacity" required>
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+</div>
+{% endblock %}
